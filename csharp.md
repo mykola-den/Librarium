@@ -1,0 +1,6 @@
+- [How GC in .NET5 works](https://devblogs.microsoft.com/dotnet/the-updated-getgcmemoryinfo-api-in-net-5-0-and-how-it-can-help-you/)
+- [Source generators](https://www.youtube.com/watch?v=3YwwdoRg2F4)
+- [C#9 Records](https://devblogs.microsoft.com/dotnet/c-9-0-on-the-record/)
+- [Reactive Programming Hot vs Cold observables](https://christianfindlay.com/2020/10/25/rx-hot-vs-cold/)
+- [Benchmarks collection](https://github.com/asc-community/dotnet-benchmarks)
+- [NET-5 Performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/)

@@ -1,0 +1,1 @@
+- [http://ipinfo.io/ip - How to get external ip of current server](https://stackoverflow.com/questions/3253701/get-public-external-ip-address)
