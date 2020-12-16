@@ -1,1 +1,2 @@
 - [http://ipinfo.io/ip - How to get external ip of current server](https://stackoverflow.com/questions/3253701/get-public-external-ip-address)
+- [k8s tutorial for beginners](https://www.youtube.com/watch?v=X48VuDVv0do&list=LL&index=2&t=11621s) - Nana Youtube 4 hours
