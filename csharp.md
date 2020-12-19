@@ -4,3 +4,4 @@
 - [Reactive Programming Hot vs Cold observables](https://christianfindlay.com/2020/10/25/rx-hot-vs-cold/)
 - [Benchmarks collection](https://github.com/asc-community/dotnet-benchmarks)
 - [NET-5 Performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/)
+- [don't block async code](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html)
