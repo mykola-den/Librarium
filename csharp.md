@@ -5,3 +5,4 @@
 - [Benchmarks collection](https://github.com/asc-community/dotnet-benchmarks)
 - [NET-5 Performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/)
 - [don't block async code](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html)
+- [Managed object internals, Part 4. Fields layout](https://devblogs.microsoft.com/premier-developer/managed-object-internals-part-4-fields-layout/)
