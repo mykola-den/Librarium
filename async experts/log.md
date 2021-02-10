@@ -4,10 +4,32 @@ https://docs.microsoft.com/en-us/archive/msdn-magazine/2010/september/concurrenc
 
 Hill climbing algorithm
 
-iocp thread
+iocp threads
 
 global vs local queue and soft starvation
 
 preemptive workload distribution
 
 Enqueue work item
+
+### Task API
+- https://blog.stephencleary.com/2013/08/startnew-is-dangerous.html 
+- https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff963551(v=pandp.10)
+
+
+task based asynchronous pattern
+
+- don't separate task creation and task executiion
+- just thread sleep -> task.delay gives way too much overhead
+- task.factory.startnew 
+#### Task Run
+- task.run covers 99% but with limits of custom scheduler
+
+- waiting taskX.Wait() or taskX.Result **Block THREAD**
+
+-- faulted canceled !!completed
+-- throws  AGGREGATE EXCEPTION with InnerException
+
+-- STATIC Task Scheduler.+ unobserved exception  event listener
+
+#### Task.factory.startnew
