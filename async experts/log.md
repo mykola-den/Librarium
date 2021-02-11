@@ -12,7 +12,7 @@ preemptive workload distribution
 
 Enqueue work item
 
-### Task API
+# Task API W2L1
 - https://blog.stephencleary.com/2013/08/startnew-is-dangerous.html 
 - https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff963551(v=pandp.10)
 
@@ -33,3 +33,22 @@ task based asynchronous pattern
 -- STATIC Task Scheduler.+ unobserved exception  event listener
 
 #### Task.factory.startnew
+more options
+
+task.continue with + continuation pattern with switch for faulted, cancelled and  completed cases 
+
+cancellatuion Throw if cancellatuinn requested
+
+task cancel exception != cancelled operation. only cancelled scheduling
+
+###T ask combination
+wait all <-> waitany **//AVOID THEM!!!**
+
+TASK.Unwrap 
+when using startnew with inner task lambda
+built in in Run!
+https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff963551(v=pandp.10)
+
+https://blog.stephencleary.com/2013/08/startnew-is-dangerous.html
+
+# Aync await W2L2
