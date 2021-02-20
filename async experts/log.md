@@ -163,7 +163,7 @@ inarrivalorder fix
 **EAP = Event Asynchronous pattern**
 
 Additional materials:
-\
+
 >Performance best practices in C#
 
 >Issue Add non-generic TaskCompletionSource 37452
@@ -195,3 +195,6 @@ Additional materials:
 - Lazy\<T> AsyncLazy\<T> AsyncEx
 ????
 - just pass around context
+
+
+///TODO: Threadcontention count
