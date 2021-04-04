@@ -6,3 +6,5 @@
 - [NET-5 Performance improvements](https://devblogs.microsoft.com/dotnet/performance-improvements-in-net-5/)
 - [don't block async code](https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html)
 - [Managed object internals, Part 4. Fields layout](https://devblogs.microsoft.com/premier-developer/managed-object-internals-part-4-fields-layout/)
+
+- [don't use else in C#](https://www.youtube.com/watch?v=_ougvb8mT7k&ab_channel=NickChapsas)
