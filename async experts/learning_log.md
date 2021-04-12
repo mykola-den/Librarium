@@ -400,6 +400,92 @@ string.itnern caveat -> enter writelock inside readlock
 
 // use case for volatile
 
-So you say lover may vary from 0 to 10 on closeness scale
-but when someone hits 10 for you and become SO you will 
-demand of him abandoning thoughts of other people. That is a very tragical mindset. Relationships change naturally. Neither of partners can be sure if he\she will *self fall into the pit of betrayal\boredom\neglecting.(chances in long run are very big from my experience) Will you honestly apply same demand to yourself?
+
+
+# Week 7 Concurrent DAta Structures
+> BC |CQ |CD | CB
+
+## Foundations 1/10
+- spsc | mpsc |spmc | mpmc
+- what if data structure is single ended and writes go to only one end
+    single-ended | multi-ended
+- volatile -half barrier(eventually consistent)
+- interloced -full barier **atomic operation** (will lock the whole cpu cache line)
+
+- single-end -> volatile
+- multi-end -> at least 1 interlocked
+
+### bounded vs unbounded collections
+- bounded -> faster
+- unbounded -> group of boundede e.g concurrentqueue with concurrentqueue segment
+
+IProducerConsumerCollection: ienumerable icollection
+    void copyto
+    bool tryadd
+    bool trytake
+    T toarray
+
+## BlockingCollection<T>
+- mpmc
+- optional\bound
+-Add\Take -blocking add\remove
+- optional timeout
+- cts
+
+**no asyncstpport**
+replacable by:
+TPL Dataflow alternative BufferBlock<T>
+Channels
+
+blockingcollection(stack) -> lifo
+
+
+## ConcurrentStack<T> 5/10
+
+head -> [v-> v-> null]
+Stack implementation
+ABA-PROBLEM (Lost C in stack)
+    - dont reuse nodes **used by concurrent stack**
+        -allocate new node on every push
+        - interlocked.CEx works ok with new refs
+    
+    - use taggedreference
+        -reference+counter (doesnpt exis
+    - use intermediate nodes | hazard pointers -> exotic
+
+Summary
+- threadsafe
+- single linked list of elements
+- lockfree adding
+- pushrange \trypoprange optimized
+
+
+## ConcurrentQueue
+- design
+    queue = linked list of segments
+    segment - bounded mpmc queue
+        - has padded allocation for HEAD and TAIL to separate on CPU cache lines (for interlocked)
+    slot - minimal cell with data and sequence number
+
+HEAD for dequeue
+TAIL for enqueue
+
+### **ENQUEUE** /dequeue
+- q.enqueue -> q.segment.Enqueue
+- s.Enqueue uses Interlocked to atomically reserve a slot
+return bool
+    while true
+        volatile read tail
+        find index and volatile read sequence number of slot
+        check consistency of segment tail and queue tail
+        volatile write next item to sequence //default on dequeeu
+
+### Count  / isempty
+- multisegment count locks
+- isempty much faster
+
+### Enumeration
+    - lock - > snapshot -> preserveforobservation -> yield return
+http://www.1024cores.net/
+
+## ConcurrentQueue in Kestrel
