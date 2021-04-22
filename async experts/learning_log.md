@@ -450,7 +450,7 @@ ABA-PROBLEM (Lost C in stack)
         - interlocked.CEx works ok with new refs
     
     - use taggedreference
-        -reference+counter (doesnpt exis
+        -reference + counter (doesnpt exis
     - use intermediate nodes | hazard pointers -> exotic
 
 Summary
@@ -489,3 +489,36 @@ return bool
 http://www.1024cores.net/
 
 ## ConcurrentQueue in Kestrel
+memory pool
+    memory poolblock
+        return -> concurrentqueue '<'memoryblock/>
+
+## Concurrent Dictionary
+
+design
+    buckets -> node ->kvp
+        buckets -grown when needed
+        node - key+value+hash(compute-heavue)+_next(ref to a next node)
+
+add or mod process:
+
+    -1. run facktory method
+    0. lock bucket
+    add -replace remove
+    release lock bucket
+
+getting value :
+[volatile.read ](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/volatile)
+returns snapshot(might be stale immediatley)
+
+#### Locking bucket
++ additional [] object _locks
++ can be tweaked by ctor (concurrencylevel, int capacity)
++ lock(_lock[i])
++ single lock object is used for multiple buckets. we may lock several buckets
+
+## CDict Demo GetOrAdd
+- wrapper for async task. Valuetasks to make it async ready
+
+## Concurrent bag
+thread safe unordered set
