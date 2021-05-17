@@ -522,3 +522,54 @@ returns snapshot(might be stale immediatley)
 
 ## Concurrent bag
 thread safe unordered set
+
+# Week 8 New Concurrent Structures
+- example with reading async bytes for websockets
+    - batching
+## Pipelines
+write
+read 
+flushAsync -> materializer
+- advanceTo
+- allows allocating small buffers and lowers load to LOH
+ /4.6.0
+ **PipeScheduler**
+### part of HttpContext
+ .netCore3.
+ Request.BodyReader
+ Response.BodyWriter
+ SequenceReader<T> - optimized for zero heap allocations
+ ## Demo Pipelines
+ - client-server
+ - pipeline
+ - networkstream
+
+ ## Channels
+- blocking collections -> producer-consumer blocking collection semantics
+- no async support
+creating of Channel<T>
+concurrnetqueue + semapgoreslim
+
+pros - minimizes allocations
+
+### Channel.CreateUnbounded
+- reader -> await ReadAsync
+- writer -> tryWrite
+
+options
+asynccronus continiations - false
+singlereader
+singlewriter
+
+### BoundedChannel
+- backpressure FullMode 
+
+### Reading from Channel
+- tryread
+- ReadAllAsync
+
+### Pipelines Vs Channnels
+io operations chunck of bytes for IIO
+
+desigend for <T>
+in-process  action
