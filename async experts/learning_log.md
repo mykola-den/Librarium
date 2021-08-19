@@ -4,13 +4,35 @@ https://docs.microsoft.com/en-us/archive/msdn-magazine/2010/september/concurrenc
 
 Hill climbing algorithm
 
-iocp threads
+iocp threads around 1000
 
 global vs local queue and soft starvation
 
 preemptive workload distribution
 
 Enqueue work item
+## Review Note:
+ - don't use threads. but they are base.
+ 
+ - unhandled ex in thread will f*k you up. app close
+ - threadpool schedules work. has different approaches to save work
+    - hill climbing algorithm
+    - config throu runtime.json max and min properties of thread counts
+ - threads have different priorities it may happen that lower priority processes can be really screwed up and abandoned because of this.
+
+  - threadpool threads are background. meaning ``.IsBackground=true``
+    - you can try to log exceptions but not prevent or save from it
+- Thread.Sleep moves current thread to ``waiting state`` depends on system timer resolution and timeout 
+    - sleep(1) slowest - forces context switch
+    - sleep(0) faster and switches between ready processes
+    - ``Thread.Yield()`` - just give time to another process on same cpu
+        > Excellent diagnostic tool - inserting it may break/fix your code :
+    - ``thread.spinwait``
+- has clr config for debugging
+- in **KESTREL** move from node libuv to **epoll** and **managed sockets**
+    - ``.ConfigureKestrel`` concurrentConnections + Upgradedconnections // also change in appsettings.josn
+- Async Progg Model
+    - Event Asynchronus pattern EAP
 
 # Task API W2L1
 - https://blog.stephencleary.com/2013/08/startnew-is-dangerous.html 
@@ -51,7 +73,9 @@ https://docs.microsoft.com/en-us/previous-versions/msp-n-p/ff963551(v=pandp.10)
 
 https://blog.stephencleary.com/2013/08/startnew-is-dangerous.html
 
-# Aync await W2L2
+
+
+## Aync await W2L2
 - async creates state machine with switch-case and enables using await
 - await separates method to before and after
 - purpose - scalability not performance
@@ -107,6 +131,28 @@ solution
 - as/aw is better than continue with. don't mix. switch cw ->
 
 - hot|cold tasks. need to .Start() or Task.Run() (cold tasks are bad design)
+## Review Note
+### TASK
+- ``Task`` it's a promise
+- IsC IsCom IsFaul
+- Task.Delay
+- use Task.Run 99%
+- Or Task.Factory.StartNew
+     -LONGrunning option
+     -detached-attached
+- runtime idiocy of accessing a variable closure i=9999,10,10,10. 
+    - introduce temp var 
+    - OR USE Factory.startnew
+- throw away continue iwth
+- Task.Unwrap
+### ASYNCAwait
+- for scalability
+- await multiple times. first fires. then result
+- eliding avoid state machine but have changed exception handling and using()
+- value task - replace task from result -less alloc onh sync happy path
+- with awaiting t.factory.start new do ``await unwrap()``
+- ability create a not started task is a nightmares
+
 
 # Async 2 W4
 
@@ -200,12 +246,28 @@ Additional materials:
 ///TODO: Threadcontention count
 https://stackoverflow.com/questions/1970345/what-is-thread-contention/7064008
 
+
+## Review Note
+- Synchronization context
+    - await caputres it.
+    - mixing .Result and awaits is f*ked up because we loose SC slide 23 4/1
+    - ``.Result + await + .configureAwait(continueoncapturedcontext=false)`` may work but do a favor and as\await all way down
+    - in libraries and reusable always use configureAwait(false)
+    - NO .REsult in CTORs
+    - for initialization create factory method and hide ctor to avoid partially created objects
+    - ASYNCHRONOUS initialization pattern   
+        ```csharp
+        var service = new Service();
+        await service.Initialization; //exposed started task
+        ```
+    - Never, ever return null as an error propagation for methods that return ``TASK``
+
 # Week 4
 ### Task when all /any
 - when all for parrallelizm
 - for batching
 - unwrap inner task
-#### when any -returns first COMPLETED|FAULTED|CANCELED 
+#### when any returns first COMPLETED|FAULTED|CANCELED 
 -do  await await Task.whenany(tasks) - to handle excheptions in inner tasks
 
 - don't forget to cancel all tasks after taskwhenany  via cts.Cansel()
